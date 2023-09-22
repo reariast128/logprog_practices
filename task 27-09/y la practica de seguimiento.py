@@ -73,3 +73,5 @@ print(f"{user_info['pronoun']}. {user_info['name']} {user_info['second_name']}, 
 destinies = ('Medellín', 'Bogotá', 'Cartagena')
 user_destiny = get_user_destiny_from_destinies_list(destinies)
 print(user_destiny)
+
+
