@@ -28,10 +28,15 @@ def get_user_info():
     return dict(zip(('name', 'second_name', 'pronoun'), (name, second_name, pronoun)))
 
 def get_user_destiny_from_destinies_list(destinies_list):
+
+    '''To-do: Hacer que evalue si la opción del usuairo existe, teniendo en cuenta que destinies_list es de la siguiente forma:
+            (('ciudad1', 'cd1'), ('ciudad2', 'cd2'), ...)
+    '''
+
     print("\nManejamos vuelos entre las siguientes ciudades:")
 
     for destiny in destinies_list:
-        print(f"\t{destiny}")
+        print(f"\t{destiny[0]}")
 
     user_origin = ''
     user_destiny = ''
@@ -70,8 +75,6 @@ print(f"{user_info['pronoun']}. {user_info['name']} {user_info['second_name']}, 
 
 
 # Definición del destino
-destinies = ('Medellín', 'Bogotá', 'Cartagena')
+destinies = (('Medellín', 'MDE'), ('Bogotá', 'BOG'), ('Cartagena', 'CTG'))
 user_destiny = get_user_destiny_from_destinies_list(destinies)
 print(user_destiny)
-
-
