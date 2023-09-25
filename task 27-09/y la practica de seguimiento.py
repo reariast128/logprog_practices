@@ -1,4 +1,4 @@
-def while_element_not_in_list_return_message(element_to_check, list_of_elements, default_message, error_message, function_to_do):
+def while_element_not_in_list_return_message(element_to_check, list_of_elements, error_message, function_to_do):
     '''Esta función ejecuta function_to_do y evalúa si element_to_check está en list_of_elements. Si está, no realiza ningún cambio y lo retorna. Si no, ejecuta function_to_do (que debe ser una función que sea de entrada de datos) y vuelve a evaluar, hasta que esté dentro de list_of_elements.'''
     
     element_to_check = function_to_do()
@@ -20,9 +20,9 @@ def get_user_info():
     second_name = input("\tIntroduce tu apellido: ")
 
     # Comprobación del pronombre
-    pronoun = while_element_not_in_list_return_message(pronoun, 
+    pronoun = None
+    pronoun = while_element_not_in_list_return_message(pronoun,
                                                        ('Mr', 'Ms'),
-                                                       "\tCómo deseas que nos refiramos a ti? (Mr/Ms): "
                                                        "\nNo has introducido una opción correcta. Elige entre Mr. o Ms.", 
                                                        lambda: input("\tCómo deseas que nos refiramos a ti? (Mr/Ms): ").capitalize())
 
@@ -43,14 +43,12 @@ def get_user_destiny_from_destinies_list(destinies_list):
         # Comprobación del origen
         user_origin = while_element_not_in_list_return_message(user_origin,
                                                             destinies_list,
-                                                            "Por favor, elige la ciudad desde la que tomas el vuelo: ",
                                                             "\nNo has introducido una opción correcta. Elige entre las ciudades disponibles.",
                                                             lambda: input("Por favor, elige la ciudad desde la que tomas el vuelo: ").capitalize())
 
         # Comprobación del destino
         user_destiny = while_element_not_in_list_return_message(user_destiny,
                                                             destinies_list,
-                                                            "Por favor, elige un destino: ",
                                                             "\nNo has introducido una opción correcta. Elige entre los destinos disponibles.",
                                                             lambda: input("Por favor, elige un destino: ").capitalize())
 
@@ -66,8 +64,8 @@ def get_user_destiny_from_destinies_list(destinies_list):
 
 def get_user_flight_return_date():
 
-    days_of_month = (x for x in range(1, 31))
-    days_of_week = ('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo')
+    days_of_month = [x for x in range(1, 31)]
+    days_of_week = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
     flight_date = 0
     return_date = 0
     week_day = ''
@@ -76,27 +74,24 @@ def get_user_flight_return_date():
 
         flight_date = int(while_element_not_in_list_return_message(flight_date, 
                                                                    days_of_month,
-                                                                   "\nAhora, introduce la fecha a la que vas a viajar (por ejemplo, 9): ",
                                                                    "No has ingresado una opción válida. Por favor, vuelve a escribir la fecha.", 
-                                                                   lambda: input("\nAhora, introduce la fecha a la que vas a viajar (por ejemplo, 9): ")))
+                                                                   lambda: int(input("\nAhora, introduce la fecha a la que vas a viajar (por ejemplo, 9): "))))
+        
         return_date = int(while_element_not_in_list_return_message(return_date,
                                                                    days_of_month,
-                                                                   "\nAhora, introduce la decha a la que vas a regresar (por ejemplo, 11): ",
                                                                    "No has ingresado una opción válida. Por favor, vuelve a escribir la fecha.",
-                                                                   lambda: input("\nAhora, introduce la decha a la que vas a regresar (por ejemplo, 11): ")
+                                                                   lambda: int(input("\nAhora, introduce la decha a la que vas a regresar (por ejemplo, 11): "))))
 
-        ))
-        week_day = while_element_not_in_list_return_message(week_day,
-                                                            days_of_week,
-                                                            "Qué día de la semana vas a viajar? (por ejemplo, miércoles): ",
-                                                            "No has ingresado una opción válida. Por favor, vuelve a escribir el día de la semana.",
-                                                            lambda: input("Qué día de la semana vas a viajar? (por ejemplo, miércoles): "))
-
-        if flight_date < return_date:
+        if return_date < flight_date:
             print("No has ingresado una opción válida. Por favor, vuelve a escribir la información.")
             print("-" * 30)
             print()
+            continue
         else:
+            week_day = while_element_not_in_list_return_message(week_day,
+                                                            days_of_week,
+                                                            "No has ingresado una opción válida. Por favor, vuelve a escribir el día de la semana.",
+                                                            lambda: input("Qué día de la semana vas a viajar? (por ejemplo, miércoles): "))
             break
 
     return flight_date, return_date, week_day
