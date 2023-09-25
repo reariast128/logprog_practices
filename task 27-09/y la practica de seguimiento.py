@@ -1,6 +1,7 @@
-def while_element_not_in_list_return_message(element_to_check, list_of_elements, error_message, function_to_do):
-    '''Esta función evalúa si element_to_check está en list_of_elements. Si está, no realiza ningún cambio y lo retorna. Si no, ejecuta function_to_do (que debe ser una función que sea de entrada de datos) y vuelve a evaluar, hasta que esté dentro de list_of_elements.'''
-
+def while_element_not_in_list_return_message(element_to_check, list_of_elements, default_message, error_message, function_to_do):
+    '''Esta función ejecuta function_to_do y evalúa si element_to_check está en list_of_elements. Si está, no realiza ningún cambio y lo retorna. Si no, ejecuta function_to_do (que debe ser una función que sea de entrada de datos) y vuelve a evaluar, hasta que esté dentro de list_of_elements.'''
+    
+    element_to_check = function_to_do()
     while element_to_check not in list_of_elements:
         print(error_message)
         element_to_check = function_to_do()
@@ -17,11 +18,11 @@ def get_user_info():
     '''
     name = input("\tIntroduce tu nombre: ")
     second_name = input("\tIntroduce tu apellido: ")
-    pronoun = input("\tCómo deseas que nos refiramos a ti? (Mr/Ms): ").capitalize()
 
     # Comprobación del pronombre
     pronoun = while_element_not_in_list_return_message(pronoun, 
-                                                       ('Mr', 'Ms'), 
+                                                       ('Mr', 'Ms'),
+                                                       "\tCómo deseas que nos refiramos a ti? (Mr/Ms): "
                                                        "\nNo has introducido una opción correcta. Elige entre Mr. o Ms.", 
                                                        lambda: input("\tCómo deseas que nos refiramos a ti? (Mr/Ms): ").capitalize())
 
@@ -29,32 +30,27 @@ def get_user_info():
 
 def get_user_destiny_from_destinies_list(destinies_list):
 
-    '''To-do: Hacer que evalue si la opción del usuairo existe, teniendo en cuenta que destinies_list es de la siguiente forma:
-            (('ciudad1', 'cd1'), ('ciudad2', 'cd2'), ...)
-    '''
-
     print("\nManejamos vuelos entre las siguientes ciudades:")
 
     for destiny in destinies_list:
-        print(f"\t{destiny[0]}")
+        print(f"\t{destiny}")
 
     user_origin = ''
     user_destiny = ''
 
-    while True:        
-        user_origin = input("Por favor, elige la ciudad desde la que tomas el vuelo: ").capitalize()
+    while True:
 
         # Comprobación del origen
         user_origin = while_element_not_in_list_return_message(user_origin,
                                                             destinies_list,
+                                                            "Por favor, elige la ciudad desde la que tomas el vuelo: ",
                                                             "\nNo has introducido una opción correcta. Elige entre las ciudades disponibles.",
                                                             lambda: input("Por favor, elige la ciudad desde la que tomas el vuelo: ").capitalize())
-
-        user_destiny = input("Por favor, elige un destino: ").capitalize()
 
         # Comprobación del destino
         user_destiny = while_element_not_in_list_return_message(user_destiny,
                                                             destinies_list,
+                                                            "Por favor, elige un destino: ",
                                                             "\nNo has introducido una opción correcta. Elige entre los destinos disponibles.",
                                                             lambda: input("Por favor, elige un destino: ").capitalize())
 
@@ -68,6 +64,43 @@ def get_user_destiny_from_destinies_list(destinies_list):
 
     return user_origin, user_destiny
 
+def get_user_flight_return_date():
+
+    days_of_month = (x for x in range(1, 31))
+    days_of_week = ('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo')
+    flight_date = 0
+    return_date = 0
+    week_day = ''
+
+    while True:
+
+        flight_date = int(while_element_not_in_list_return_message(flight_date, 
+                                                                   days_of_month,
+                                                                   "\nAhora, introduce la fecha a la que vas a viajar (por ejemplo, 9): ",
+                                                                   "No has ingresado una opción válida. Por favor, vuelve a escribir la fecha.", 
+                                                                   lambda: input("\nAhora, introduce la fecha a la que vas a viajar (por ejemplo, 9): ")))
+        return_date = int(while_element_not_in_list_return_message(return_date,
+                                                                   days_of_month,
+                                                                   "\nAhora, introduce la decha a la que vas a regresar (por ejemplo, 11): ",
+                                                                   "No has ingresado una opción válida. Por favor, vuelve a escribir la fecha.",
+                                                                   lambda: input("\nAhora, introduce la decha a la que vas a regresar (por ejemplo, 11): ")
+
+        ))
+        week_day = while_element_not_in_list_return_message(week_day,
+                                                            days_of_week,
+                                                            "Qué día de la semana vas a viajar? (por ejemplo, miércoles): ",
+                                                            "No has ingresado una opción válida. Por favor, vuelve a escribir el día de la semana.",
+                                                            lambda: input("Qué día de la semana vas a viajar? (por ejemplo, miércoles): "))
+
+        if flight_date < return_date:
+            print("No has ingresado una opción válida. Por favor, vuelve a escribir la información.")
+            print("-" * 30)
+            print()
+        else:
+            break
+
+    return flight_date, return_date, week_day
+
 # Mensaje de bienvenida
 print("\nBienvenidx al programa de reserva de vuelos. Por favor, indícanos la siguiente información:")
 user_info = get_user_info()
@@ -76,5 +109,7 @@ print(f"{user_info['pronoun']}. {user_info['name']} {user_info['second_name']}, 
 
 # Definición del destino
 destinies = ('Medellín', 'Bogotá', 'Cartagena')
-user_destiny = get_user_destiny_from_destinies_list(destinies)
+user_origin, user_destiny = get_user_destiny_from_destinies_list(destinies)
+user_flight_date, user_return_date, user_week_day = get_user_flight_return_date()
 print(user_destiny)
+print(user_flight_date, user_return_date, user_week_day)
