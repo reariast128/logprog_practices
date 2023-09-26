@@ -96,6 +96,9 @@ def get_user_flight_return_date():
 
     return flight_date, return_date, week_day
 
+def get_user_flight_price(origin, destiny, flight_date, distances_dict):
+    pass
+
 # Mensaje de bienvenida
 print("\nBienvenidx al programa de reserva de vuelos. Por favor, indícanos la siguiente información:")
 user_info = get_user_info()
@@ -104,5 +107,11 @@ print(f"{user_info['pronoun']}. {user_info['name']} {user_info['second_name']}, 
 
 # Definición del destino
 destinies = ('Medellín', 'Bogotá', 'Cartagena')
+distances = {
+    ('Medellín', 'Bogotá'): 416, 
+    ('Medellín', 'Cartagena'): 639,
+    ('Bogotá', 'Cartagena'): 1037
+}
 user_origin, user_destiny = get_user_destiny_from_destinies_list(destinies)
 user_flight_date, user_return_date, user_week_day = get_user_flight_return_date()
+user_fligt_price = get_user_flight_price(distances)
