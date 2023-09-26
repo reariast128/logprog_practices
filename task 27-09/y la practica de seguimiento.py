@@ -1,3 +1,5 @@
+import random
+
 def while_element_not_in_list_return_message(element_to_check, list_of_elements, error_message, function_to_do):
     '''Esta función ejecuta function_to_do y evalúa si element_to_check está en list_of_elements. Si está, no realiza ningún cambio y lo retorna. Si no, ejecuta function_to_do (que debe ser una función que sea de entrada de datos) y vuelve a evaluar, hasta que esté dentro de list_of_elements.'''
     
@@ -117,7 +119,23 @@ def get_user_flight_price(distance, flight_date):
             return 119900
         else:
             return 213000
-        
+
+def get_user_chair():
+
+    print("Tenemos las siguientes opciones para que escojas el asiento:")
+    print("\tAl lado de la ventana (opción 'A')")
+    print("\tTe es indiferente (opción 'B')")
+    print("\tAl lado del pasillo (opción 'C')")
+
+    chair_type = None
+    chair_type = while_element_not_in_list_return_message(chair_type,
+                                                         ('A', 'B', 'C'),
+                                                         "No has ingresado una opción de asiento válida",
+                                                         lambda: input("\nPor favor, elige entre una de las opciones anteriores: ")
+    )
+
+    return chair_type + str(random.randint(1, 29))
+
 # Mensaje de bienvenida
 print("\nBienvenidx al programa de reserva de vuelos. Por favor, indícanos la siguiente información:")
 user_info = get_user_info()
@@ -142,3 +160,6 @@ user_flight_distance = get_flight_distance(user_origin, user_destiny, distances)
 
 # Obtención del precio del boleto en relación a la distancia entre ciudades
 user_fligt_price = get_user_flight_price(user_flight_distance, user_week_day)
+
+# Obtención de la silla 
+user_chair = get_user_chair()
