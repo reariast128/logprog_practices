@@ -96,9 +96,16 @@ def get_user_flight_return_date():
 
     return flight_date, return_date, week_day
 
-def get_user_flight_price(origin, destiny, flight_date, distances_dict):
-    pass
+def get_flight_distance(origin, destiny, distances_dict):
 
+    if (origin, destiny) in distances_dict:
+        return distances[(user_origin, user_destiny)]
+    else:
+        print(f"Error: No existe el valor de la distancia para estos destinos: {origin}, {destiny}")
+
+def get_user_flight_price(distance, flight_date):
+    pass
+        
 # Mensaje de bienvenida
 print("\nBienvenidx al programa de reserva de vuelos. Por favor, indícanos la siguiente información:")
 user_info = get_user_info()
@@ -114,4 +121,5 @@ distances = {
 }
 user_origin, user_destiny = get_user_destiny_from_destinies_list(destinies)
 user_flight_date, user_return_date, user_week_day = get_user_flight_return_date()
-user_fligt_price = get_user_flight_price(distances)
+user_flight_distance = get_flight_distance(user_origin, user_destiny, distances)
+user_fligt_price = get_user_flight_price(user_flight_distance, user_flight_date)
