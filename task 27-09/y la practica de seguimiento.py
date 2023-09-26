@@ -136,30 +136,56 @@ def get_user_chair():
 
     return chair_type + str(random.randint(1, 29))
 
-# Mensaje de bienvenida
-print("\nBienvenidx al programa de reserva de vuelos. Por favor, indícanos la siguiente información:")
-user_info = get_user_info()
-print(f"{user_info['pronoun']}. {user_info['name']} {user_info['second_name']}, bienvenidx a la aerolínea FastFast")
+if __name__ == '__main__':
+
+    reservation_list = []
+
+    while True:
+
+        # Mensaje de bienvenida
+        print("\nBienvenidx al programa de reserva de vuelos. Por favor, indícanos la siguiente información:")
+        user_info = get_user_info()
+        print(f"{user_info['pronoun']}. {user_info['name']} {user_info['second_name']}, bienvenidx a la aerolínea FastFast")
 
 
-# Definición del destino
-destinies = ('Medellín', 'Bogotá', 'Cartagena')
-distances = {
-    ('Medellín', 'Bogotá'): 416, 
-    ('Medellín', 'Cartagena'): 639,
-    ('Bogotá', 'Cartagena'): 1037
-}
+        # Definición del destino
+        destinies = ('Medellín', 'Bogotá', 'Cartagena')
+        distances = {
+            ('Medellín', 'Bogotá'): 416, 
+            ('Medellín', 'Cartagena'): 639,
+            ('Bogotá', 'Cartagena'): 1037
+        }
 
-user_origin, user_destiny = get_user_destiny_from_destinies_list(destinies)
+        user_origin, user_destiny = get_user_destiny_from_destinies_list(destinies)
 
-# Obtención de las fechas en las que el usuario sale y regresa
-user_flight_date, user_return_date, user_week_day = get_user_flight_return_date()
+        # Obtención de las fechas en las que el usuario sale y regresa
+        user_flight_date, user_return_date, user_week_day = get_user_flight_return_date()
 
-# Obtención de la distancia entre ciudades de origen y de destino
-user_flight_distance = get_flight_distance(user_origin, user_destiny, distances)
+        # Obtención de la distancia entre ciudades de origen y de destino
+        user_flight_distance = get_flight_distance(user_origin, user_destiny, distances)
 
-# Obtención del precio del boleto en relación a la distancia entre ciudades
-user_fligt_price = get_user_flight_price(user_flight_distance, user_week_day)
+        # Obtención del precio del boleto en relación a la distancia entre ciudades
+        user_fligt_price = get_user_flight_price(user_flight_distance, user_week_day)
 
-# Obtención de la silla 
-user_chair = get_user_chair()
+        # Obtención de la silla 
+        user_chair = get_user_chair()
+
+        # Añadir el diccionario con la información del usuario a la lista de reservas.
+        reservation_list.append({
+            user_chair: (user_info['name'], user_destiny, user_fligt_price)
+        })
+
+        add_user = None
+        add_user = while_element_not_in_list_return_message(add_user,
+                                                            ('S', 'N'),
+                                                            "No has ingresado una opción correcta.",
+                                                            lambda: input("\nDeseas añadir más usuarios? (S/N): ").upper()
+        )
+
+        if add_user == 'N':
+            break
+        else:
+            continue
+
+    for reservation in reservation_list:
+        print(reservation)
