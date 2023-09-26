@@ -104,7 +104,19 @@ def get_flight_distance(origin, destiny, distances_dict):
         print(f"Error: No existe el valor de la distancia para estos destinos: {origin}, {destiny}")
 
 def get_user_flight_price(distance, flight_date):
-    pass
+
+    days_of_week = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+
+    if flight_date in days_of_week[0:4]:
+        if distance < 400:
+            return 779000
+        else:
+            return 156900
+    elif flight_date in days_of_week[4:7]:
+        if distance < 400:
+            return 119900
+        else:
+            return 213000
         
 # Mensaje de bienvenida
 print("\nBienvenidx al programa de reserva de vuelos. Por favor, indícanos la siguiente información:")
@@ -119,7 +131,14 @@ distances = {
     ('Medellín', 'Cartagena'): 639,
     ('Bogotá', 'Cartagena'): 1037
 }
+
 user_origin, user_destiny = get_user_destiny_from_destinies_list(destinies)
+
+# Obtención de las fechas en las que el usuario sale y regresa
 user_flight_date, user_return_date, user_week_day = get_user_flight_return_date()
+
+# Obtención de la distancia entre ciudades de origen y de destino
 user_flight_distance = get_flight_distance(user_origin, user_destiny, distances)
-user_fligt_price = get_user_flight_price(user_flight_distance, user_flight_date)
+
+# Obtención del precio del boleto en relación a la distancia entre ciudades
+user_fligt_price = get_user_flight_price(user_flight_distance, user_week_day)
