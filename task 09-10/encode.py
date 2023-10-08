@@ -6,7 +6,7 @@ Notas:
 unicode_codes = {
     'punctuation1': [code for code in range(32, 47)],
     'digits': [code for code in range(48, 57)],
-    'punctuation2': [58, 64],
+    'punctuation2': [code for code in range(58, 64)],
     'upper_a_to_z': [code for code in range(65, 90)],
     'lower_a_to_z': [code for code in range(97, 122)]
 }
