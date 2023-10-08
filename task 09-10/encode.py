@@ -1,30 +1,25 @@
-'''
-Notas:
-    No voy a considerar las letras con acentos, ni puntos, ni Ñ o ñ por el momento. Otro día quizás.
-'''
-
-unicode_codes = {
-    'punctuation1': [code for code in range(32, 47)],
-    'digits': [code for code in range(48, 57)],
-    'punctuation2': [code for code in range(58, 64)],
-    'upper_a_to_z': [code for code in range(65, 90)],
-    'lower_a_to_z': [code for code in range(97, 122)]
-}
-
 def text_to_number_list(text):
     return [ord(letter) for letter in text]
 
 
-def encode_number_list(number_list, key):
-    pass
+def encode_message(message, key = 0):
+    return ''.join(list(map(lambda letter_number: chr(letter_number + key), text_to_number_list(message))))
+
+def decode_message(encoded_message, key):
+    return ''.join(list(map(lambda letter_number: chr(letter_number - key), text_to_number_list(encoded_message))))
 
 message = input("Introduce el mensaje: ")
+key = None
 
-'''while True:
+while True:
     try:
         key = int(input("Introduce la cantidad de letras a desplazar (la llave): "))
         break
     except:
-        print("No has ingresado una opción válida.\n")'''
+        print("No has ingresado una opción válida.\n")
 
-print(text_to_number_list(message))
+encoded_message = encode_message(message, key)
+decoded_message = decode_message(encoded_message, key)
+
+print(encoded_message)
+print(decoded_message)
